@@ -1,0 +1,59 @@
+body { margin: 0; }
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+    padding: 0.6rem 0.8rem;
+    border-radius: 0.3rem;
+    border: 0;
+    transition: all 0.1s;
+}
+button:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 3px 3px #ccc;
+    cursor: pointer;
+}
+
+input {
+    display: block;
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid black;
+    border-radius: 0.3rem;
+    box-sizing: border-box;
+}
+
+.modal {
+    background: white;
+    border-radius: 0.5rem;
+    padding: 1em;
+    box-shadow: 0 0.5rem 1rem #333;
+    align-self: flex-start;
+    margin-top: 20vh;
+}
+
+.modal header {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start
+}
+.modal section {
+    padding: 1rem;
+}
+.modal footer {
+    padding: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}

@@ -1,0 +1,54 @@
+Static Data
+- List of nouns (1000)
+
+Dynamic Data
+- Rooms[]
+    - id (slug)
+    - HostUserId
+    - Users[]
+        - id
+        - name
+        - TeamId
+        - available
+    - TeamOne
+        - Name
+        - Color
+    - TeamTwo
+        - Name
+        - Color
+    - CurrentGameId
+    - Games[]
+        - id
+        - Words[]
+            - WordId
+            - Index
+            - Type (0: None, 1: TeamOne, 2: TeamTwo, 3: GameOver)
+            - Revealed
+        - Turn (1: TeamOne, 2: TeamTwo)
+        - ClueText (null or string)
+        - ClueWordCount (null or number)
+
+Functions
+- Person creates room
+    > createRoom(username, customSlug?)
+    - creates room, creates user, makes user HostUser
+    - returns link
+    - user should be redirected to link
+    > save cookie data (id, name)
+    - user has dismissable popup with link sharing options
+        - link and clipboard copy button, also QR Code button
+- Person visits room by link
+    - pulls userId from cookies, and checks if in current room
+        - if no cookies, then new user
+    > isNewUser(userId, slug)
+    - New Person
+        - prompt user for name
+        > createUser(name)
+    - Existing Person
+        > pull cookie data (id, name)
+        - update availability
+        - sync state, rerender gameboard
+- Person joins Team
+    - joinTeam(userId, teamId)
+- HostUser presses Start New Game
+    - newGame(userId)
