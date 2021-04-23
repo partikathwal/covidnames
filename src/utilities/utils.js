@@ -1,4 +1,4 @@
-const Utils = {
+const utils = {
     Constants: {
         CookieNames: {
             userId: "userId",
@@ -7,11 +7,11 @@ const Utils = {
     },
     Random: {
         number: function(max){
-            if(!max) throw new Error("Utils.Random.number needs a max value.");
+            if(!max) throw new Error("utils.Random.number needs a max value.");
             return Math.floor(Math.random() * max);
         },
         bool: function(){
-            return this.number(2);
+            return !!this.number(2);
         },
         letters: function(length = 4){
             let id = "";
@@ -45,11 +45,11 @@ const Utils = {
             document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
         },
         deleteAll: function(exceptionList = ["username"]){
-            Object.keys(Utils.Constants.CookieNames)
+            Object.keys(utils.Constants.CookieNames)
                 .filter((name) => exceptionList.includes(name) === false)
                 .forEach((name) => this.delete(name));
         }
     }
 }
 
-export default Utils;
+export default utils;

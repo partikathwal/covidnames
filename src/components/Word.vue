@@ -1,5 +1,5 @@
 <template>
-  <div class="card" :class="revealed? ('type-'+type) : 'default-color'">
+  <div class="card" :class="revealed? ('type-'+type) : isSpymaster? ('text-type-'+type) : 'default-color'">
       <span>{{text}}</span>
   </div>
 </template>
@@ -13,7 +13,8 @@ export default {
     props: {
         type: Number,
         text: String,
-        revealed: Boolean
+        revealed: Boolean,
+        isSpymaster: Boolean
     }
 }
 </script>
@@ -24,14 +25,12 @@ export default {
     /* width: 17%; */
     /* margin: 1%; */
     /* height: 4em; */
-    background: grey;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 0.25rem;
     cursor: pointer;
     user-select: none;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .default-color {
@@ -39,15 +38,36 @@ export default {
     color: black;
 }
 .type-0 {
-    background-color: #eece67;
+    background-color: #dbc786;
     color: black;
 }
 .type-1 {
-    background-color: #d10000;
+    background-color: #b32020;
     color: white;
 }
 .type-2 {
-    background-color: #0063e6;
+    background-color: #2367c0;
     color: white;
+}
+.type-3 {
+    background-color: #000000;
+    color: white;
+}
+
+.text-type-0 {
+    background-color: #cccccc;
+    color: black;
+}
+.text-type-1 {
+    background-color: #e2b1b1;
+    color: black;
+}
+.text-type-2 {
+    background-color: #b6cae9;
+    color: black;
+}
+.text-type-3 {
+    background-color: #7a7a7a;
+    color: white
 }
 </style>

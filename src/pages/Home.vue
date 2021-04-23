@@ -2,7 +2,7 @@
   <div class="overlay">
     <div class="modal" v-if="!showCreateModal">
       <form @submit.prevent="joinRoom()">
-        <header>
+        <header style="justify-content: center;">
           COVID NAMES
         </header>
         <section>
@@ -59,7 +59,7 @@ export default {
 
       const userId = response.data.userId;
       console.log(userId);
-      router.push(`/${this.roomId}`);
+      router.push(`/${this.roomId}?uid=${userId}`);
     },
     createRoom(){
       this.errorText = "";
@@ -67,7 +67,7 @@ export default {
     },
     async create(){
       const response = await api.room.create(this.username);
-      router.push(`/${response.data.roomId}?isHost=true`);
+      router.push(`/${response.data.roomId}?uid=${response.data.userId}`);
     },
     back(){
       this.showCreateModal = false;
@@ -79,5 +79,9 @@ export default {
 <style>
 input {
   text-transform: uppercase;
+}
+
+html, body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 </style>

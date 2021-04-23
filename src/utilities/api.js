@@ -73,6 +73,14 @@ api.room.join = async (roomId, username) => {
     //Utils.Cookies.set(Utils.Constants.CookieNames.userId, userId);
 }
 
+api.room.get = async (roomId) => {
+    const room = await db.ref(`rooms/${roomId}`).once("value").then(snap => snap.val());
+    return {
+        error: null,
+        data: room
+    }
+}
+
 api.wordBank.get = async () => {
     const snap = await db.ref(`allWords`).once("value");
     const words = snap.val();
@@ -86,13 +94,15 @@ api.wordBank.addMany = async (words) => {
 api.game.create = async (roomId) => {
     const gameId = generateGameId();
     const allWords = await api.wordBank.get();
+    const firstTeam = utils.Random.bool() ? 1 : 2;
+    const secondTeam = firstTeam === 1 ? 2 : 1;
     const gameWords = allWords
                         .sort(() => Math.random() - 0.5)
                         .slice(0, 25)
                         .map((w, i) => ({
                             text: w.text,
                             revealed: false,
-                            type: i < 8 ? 0 : i < 16 ? 1 : 2
+                            type: (i < 7) ? 0 : (i < 16) ? firstTeam : (i < 24) ? secondTeam : 3
                         }))
                         .sort(() => Math.random() - 0.5)
 
@@ -106,8 +116,7 @@ api.game.create = async (roomId) => {
         error: null,
         data: {
             roomId,
-            gameId,
-            isHost: true
+            gameId
         }
     }
 }
@@ -122,14 +131,6 @@ api.game.get = async (roomId, gameId) => {
             gameState: game
         }
     }
-}
-
-api.game.getCurrent = async (roomId) => {
-    console.log(roomId);
-    const gameId = await db.ref(`rooms/${roomId}/currentGameId`).once("value").then(snap => snap.val());
-    console.log(gameId);
-    const response = await api.game.get(roomId, gameId);
-    return response;
 }
 
 api.game.revealWord = async (roomId, gameId, wordIndex) => {

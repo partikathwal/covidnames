@@ -7,7 +7,8 @@
     <div id="gameBoard">
       <Word :type="word.type"
             :text="word.text"
-            :revealed="isSpymaster? true : word.revealed"
+            :revealed="word.revealed"
+            :isSpymaster="isSpymaster"
             v-for="word in words"
             :key="word.text"
             @click="selectWord(word)"/>
@@ -38,13 +39,15 @@ export default {
     }
   },
   async mounted(){
-    const roomId = this.$route.params.roomId;
-    const isHost = this.$route.query.isHost;
-    const response = await api.game.getCurrent(roomId);
+    const roomId = this.$route.params.roomId.toUpperCase();
+    const userId = this.$route.query.uid;
+    const response = await api.room.get(roomId);
+
     this.roomId = roomId;
     this.gameId = response.data.currentGameId;
-    this.words = response.data.gameState.words;
-    this.isHost = isHost;
+    this.words = response.data.games[this.gameId].words;
+
+    this.isHost = parseInt(userId) === response.data.hostUserId;
 
     this.listenForWordChange();
     this.listenForGameChange();
